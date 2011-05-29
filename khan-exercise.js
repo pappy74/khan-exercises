@@ -303,21 +303,12 @@ function makeProblem() {
 
 		// Clone the hints and add them into their area
 		var hints = exercise.children(".hints").clone();
-		var problemHints = problem.find(".hints");
-
-		if ( !hints.length || hints.is(":empty") ) {
-
-			// there is no global hints section (or it's empty).  Just grab
-			// the problem-specific hints section in its entirety
-			hints = problemHints;
-		} else {
-			
-			// Extract any problem-specific hints
-			problem.find(".hints").remove().children().each(function() {
-				// Replace the hint placeholders
-				hints.find("." + this.className).replaceWith( this );
-			});
-		}
+		
+		// Extract any problem-specific hints
+		problem.find(".hints").remove().children().each(function() {
+			// Replace the hint placeholders
+			hints.find("." + this.className).replaceWith( this );
+		});
 		
 		hints
 			// Hide all the hints
