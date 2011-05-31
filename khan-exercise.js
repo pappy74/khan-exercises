@@ -43,7 +43,7 @@ loadScripts( [ "https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js
 					// Show a congratulations message
 					jQuery("#oops").hide();
 					jQuery("#congrats").show();
-					
+
 					// Toggle the navigation buttons
 					jQuery("#check").hide();
 					jQuery("#next").show().focus();
@@ -59,19 +59,25 @@ loadScripts( [ "https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js
 			
 			// Watch for when the next button is clicked
 			jQuery("#next").click(function() {
-				// Erase the old value and hide congrats message
-				jQuery("#solution").val( "" );
-				jQuery("#congrats").hide();
-				
-				// Toggle the navigation buttons
-				jQuery("#check").show();
-				jQuery("#next").blur().hide();
-				
-				// Wipe out any previous problem
-				jQuery("#workarea, #hintsarea").empty();
-				
-				// Generate a new problem
-				makeProblem();
+				// if this is part of a composite exercise, send an event
+				if ( query.composite && (--query.composite_times === 0) ) {
+					// send event
+					parent.postMessage("next-exercise", "*");
+				} else {
+					// Erase the old value and hide congrats message
+					jQuery("#solution").val( "" );
+					jQuery("#congrats").hide();
+					
+					// Toggle the navigation buttons
+					jQuery("#check").show();
+					jQuery("#next").blur().hide();
+					
+					// Wipe out any previous problem
+					jQuery("#workarea, #hintsarea").empty();
+					
+					// Generate a new problem
+					makeProblem();
+				}
 				
 				return false;
 			});
