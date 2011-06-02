@@ -35,11 +35,11 @@ jQuery.extend(KhanUtil, {
 		return n < 0 ? "(" + n + ")" : n;
 	},
 
-	/* formattedSquareRootOf(24) gives 2\sqrt{6} */
-	formattedSquareRootOf: function(n) {
-		if(n == 1) {
-			/* so as to not return "" later */
-			return "1";
+	splitRadical: function( n ) {
+		console.log(n)
+		console.log(typeof n)
+		if ( n === 0 ) {
+			return [ 0, 1 ];
 		}
 
 		var coefficient = 1;
@@ -52,12 +52,92 @@ jQuery.extend(KhanUtil, {
 			}
 		}
 
-		var cString = coefficient == 1 ? "" : coefficient.toString();
-		var rString = radical == 1 ? "" : "\\sqrt{" + radical + "}";
-		return cString + rString;
+		return [coefficient, radical];
+	},
+
+	/* formattedSquareRootOf(24) gives 2\sqrt{6} */
+	formattedSquareRootOf: function( n ) {
+		if( n === 1  || n === 0 ) {
+			/* so as to not return "" or "\\sqrt{0}" later */
+			return n.toString();
+		} else {
+			var split = KhanUtil.splitRadical( n );
+			var coefficient = split[0] == 1 ? "" : split[0].toString();
+			var radical = split[1] == 1 ? "" : "\\sqrt{" + split[1] + "}";
+
+			return cString + rString;
+		}
 	},
 
 	squareRootCanSimplify: function(n) {
 		return KhanUtil.formattedSquareRootOf(n) != ("\\sqrt{" + n + "}");
+	},
+
+	// Ported from https://github.com/clojure/clojure/blob/master/src/clj/clojure/pprint/cl_format.clj#L285
+	cardinal: function( n ) {
+		var cardinalScales = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion", "undecillion", "duodecillion", "tredecillion", "quattuordecillion", "quindecillion", "sexdecillion", "septendecillion", "octodecillion", "novemdecillion", "vigintillion"];
+		var cardinalUnits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+		var cardinalTens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+		// For formatting numbers less than 1000
+		var smallNumberWords = function( n ) {
+			var hundredDigit = Math.floor( n / 100 );
+			var rest = n % 100;
+			var str = "";
+
+			if ( hundredDigit ) {
+				str += cardinalUnits[ hundredDigit ] + " hundred";
+			}
+
+			if ( hundredDigit && rest ) {
+				str += " ";
+			}
+
+			if ( rest ) {
+				if ( rest < 20 ) {
+					str += cardinalUnits [ rest ];
+				} else {
+					var tenDigit = Math.floor( rest / 10 );
+					var unitDigit = rest % 10;
+
+					if ( tenDigit ) {
+						str += cardinalTens [ tenDigit ];
+					}
+
+					if ( tenDigit && unitDigit ) {
+						str += "-";
+					}
+
+					if ( unitDigit ) {
+						str += cardinalUnits [ unitDigit ];
+					}
+				}
+			}
+
+			return str;
+		};
+
+		var words = [];
+		var scale = 0;
+		while ( n > 0 ) {
+			var end = n % 1000;
+
+			if ( end > 0 ) {
+				if ( scale > 0 ) {
+					words.unshift( cardinalScales[ scale ] );
+				}
+
+				words.unshift( smallNumberWords( end ) );
+			}
+
+			n = Math.floor( n / 1000 );
+			scale += 1;
+		}
+
+		return words.join( " " );
+	},
+
+	Cardinal: function( n ) {
+		var card = KhanUtil.cardinal( n );
+		return card.charAt(0).toUpperCase() + card.slice(1);
 	}
 });

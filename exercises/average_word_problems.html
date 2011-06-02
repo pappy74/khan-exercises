@@ -6,15 +6,12 @@
 </head>
 <body>
 	<div class="exercise">
-	<div class="vars">
-	</div>
-
 	<div class="problems">
 		<div>
-			<div class="vars">
+			<div class="vars" data-ensure="SUM % LENGTH === 0">
 				<var id="LENGTH">randRange(4, 6)</var>
 				<var id="SCORES">randRange(75, 98, LENGTH)</var>
-				<var id="SUM" data-ensure="SUM % LENGTH <= 0.5">(function() {
+				<var id="SUM">(function() {
 					var sum = 0;
 
 					jQuery.each(SCORES, function( i, elem ) {
@@ -33,17 +30,17 @@
 			<div class="solution"><var>SUM / LENGTH</var></div>
 
 			<div class="hints">
-				<p class="hint1">The average is the sum of <var>his(1)</var> scores divided by the number of scores.</p>
-				<p class="hint2">There are <var>LENGTH</var> scores and their sum is <code><var>SCORES.join(" + ")</var> = <var>SUM</var></code>.</p>
-				<p class="hint3"><var>His(1)</var> average score is <code><var>SUM</var> \div <var>LENGTH</var> = <var>SUM / LENGTH</var></code>.</p>
+				<p>The average is the sum of <var>his(1)</var> scores divided by the number of scores.</p>
+				<p>There are <var>LENGTH</var> scores and their sum is <code><var>SCORES.join(" + ")</var> = <var>SUM</var></code>.</p>
+				<p><var>His(1)</var> average score is <code><var>SUM</var> \div <var>LENGTH</var> = <var>SUM / LENGTH</var></code>.</p>
 			</div>
 		</div>
 
 		<div>
-			<div class="vars">
+			<div class="vars" data-ensure="NEW_AVG + COUNT * (NEW_AVG - OLD_AVG) <= 100">
 				<var id="COUNT">randRange(3, 7)</var>
 				<var id="OLD_AVG">randRange(77, 88)</var>
-				<var id="NEW_AVG" data-ensure="NEW_AVG + COUNT * (NEW_AVG - OLD_AVG) <= 100">randRange(OLD_AVG + 2, 99)</var>
+				<var id="NEW_AVG">randRange(OLD_AVG + 2, 99)</var>
 			</div>
 
 			<div class="question">
@@ -54,19 +51,19 @@
 			<div class="solution"><var>NEW_AVG + COUNT * (NEW_AVG - OLD_AVG)</var></div>
 
 			<div class="hints">
-				<p class="hint1">Let <var>his(1)</var> score on the next <var>exam(1)</var> be <code>x</code>.</p>
-				<p class="hint2">The sum of all of <var>his(1)</var> scores is then <code><var>COUNT</var> \cdot <var>OLD_AVG</var> + x</code>.</p>
-				<p class="hint3">The same sum must also be equal to <code><var>COUNT + 1</var> \cdot <var>NEW_AVG</var></code>.</p>
-				<p class="hint4">Solve: <code>x = <var>COUNT + 1</var> \cdot <var>NEW_AVG</var> - <var>COUNT</var> \cdot <var>OLD_AVG</var> = <var>(COUNT + 1) * NEW_AVG - COUNT * OLD_AVG</var></code>.</p>
+				<p>Let <var>his(1)</var> score on the next <var>exam(1)</var> be <code>x</code>.</p>
+				<p>The sum of all of <var>his(1)</var> scores is then <code><var>COUNT</var> \cdot <var>OLD_AVG</var> + x</code>.</p>
+				<p>The same sum must also be equal to <code><var>COUNT + 1</var> \cdot <var>NEW_AVG</var></code>.</p>
+				<p>Solve: <code>x = <var>COUNT + 1</var> \cdot <var>NEW_AVG</var> - <var>COUNT</var> \cdot <var>OLD_AVG</var> = <var>(COUNT + 1) * NEW_AVG - COUNT * OLD_AVG</var></code>.</p>
 			</div>
 		</div>
 
 		<div>
-			<div class="vars">
+			<div class="vars" data-ensure="(OLD_AVG * COUNT + 100 * REMAINING) % (COUNT + REMAINING) === 0">
 				<var id="COUNT">randRange(3, 6)</var>
 				<var id="REMAINING">randRange(2, COUNT - 2)</var>
 				<var id="OLD_AVG">randRange(77, 88)</var>
-				<var id="NEW_AVG" data-ensure="(OLD_AVG * COUNT + 100 * REMAINING) % (COUNT + REMAINING) <= 0.5">(OLD_AVG * COUNT + 100 * REMAINING) / (COUNT + REMAINING)</var>
+				<var id="NEW_AVG">(OLD_AVG * COUNT + 100 * REMAINING) / (COUNT + REMAINING)</var>
 			</div>
 
 			<div class="question">
@@ -77,17 +74,10 @@
 			<div class="solution"><var>NEW_AVG</var></div>
 
 			<div class="hints">
-				<p class="hint1">If <var>he(1)</var> gets 100 on the remaining <var>plural(exam(1))</var>, the sum of <var>his(1)</var> scores will be <code><var>COUNT</var> \cdot <var>OLD_AVG</var> + <var>REMAINING</var> \cdot <var>100</var> = <var>COUNT * OLD_AVG + 100 * REMAINING</var></code>.</p>
-				<p class="hint2"><var>His(1)</var> overall average will then be <code><var>COUNT * OLD_AVG + 100 * REMAINING</var> \div <var>COUNT + REMAINING</var> = <var>NEW_AVG</var></code>.</p>
+				<p>If <var>he(1)</var> gets 100 on the remaining <var>plural(exam(1))</var>, the sum of <var>his(1)</var> scores will be <code><var>COUNT</var> \cdot <var>OLD_AVG</var> + <var>REMAINING</var> \cdot <var>100</var> = <var>COUNT * OLD_AVG + 100 * REMAINING</var></code>.</p>
+				<p><var>His(1)</var> overall average will then be <code><var>COUNT * OLD_AVG + 100 * REMAINING</var> \div <var>COUNT + REMAINING</var> = <var>NEW_AVG</var></code>.</p>
 			</div>
 		</div>
-	</div>
-
-	<div class="hints">
-		<p class="hint1"></p>
-		<p class="hint2"></p>
-		<p class="hint3"></p>
-		<p class="hint4"></p>
 	</div>
 	</div>
 </body>
